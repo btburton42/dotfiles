@@ -1,0 +1,86 @@
+# BUNDLER
+alias be='bundle exec'
+
+# TERMINAL
+alias l='ls -la'
+
+# dir color change
+export LSCOLORS="Gxfxcxdxbxegedabagacad"
+
+# PATH VARS
+export PATH=/usr/local/bin
+PATH=$PATH:/usr/local/munki
+PATH=$PATH:/usr/X11/bin
+PATH=$PATH:/usr/bin
+PATH=$PATH:/usr/sbin
+PATH=$PATH:/bin
+PATH=$PATH:/sbin
+PATH=$PATH:/usr/local/sbin
+# PATH=$PATH:$EC2_HOME/bin
+
+# RBENV
+export RBENV_ROOT=/usr/local/var/rbenv
+if which rbenv > /dev/null; then eval "$(rbenv init -)"; fi
+
+PATH=/opt/chefdk/bin:$PATH
+
+# ANDROID STUDIO
+# export STUDIO_JDK=/Library/Java/JavaVirtualMachines/jdk1.8.0_25.jdk
+# alias adb='/Users/tyler.burton/Library/Android/sdk/platform-tools/adb'
+# alias fastboot='/Users/tyler.burton/Library/Android/sdk/platform-tools/fastboot'
+
+
+# EDITOR
+export EDITOR='atom -nw'
+export BUNDLER_EDITOR=$EDITOR
+export GIT_EDITOR="$EDITOR -w"
+alias edit=$EDITOR
+
+# GIT
+alias gprune="git remote prune origin"
+alias gst='git status'
+alias gmom='git merge origin master'
+alias gmm='git merge master'
+alias gcam='git commit -a --m'
+alias gd='git diff'
+alias gfa='git fetch --all'
+alias gba='git branch --all'
+
+
+## rebase against master
+function grb {
+  CUR_BRANCH=`git rev-parse --abbrev-ref HEAD`
+  HASH=`git merge-base master ${CUR_BRANCH}`
+  git rebase -i ${HASH}
+}
+
+# JAVA
+export JENV_ROOT=/usr/local/opt/jenv
+if which jenv > /dev/null; then eval "$(jenv init -)"; fi
+
+# export JAVA_HOME="$HOME/.jenv/versions/`jenv version-name`"
+# alias jenv_set_java_home='export JAVA_HOME="$HOME/.jenv/versions/`jenv version-name`"'
+
+# MAVEN
+export MAVEN_OPTS='-XX:MaxPermSize=512M -Xms2048M -Xmx2048M -Xss64M -XX:+CMSClassUnloadingEnabled'
+
+# NODE
+# alias node="node --harmony"
+
+# NVM
+# export NVM_DIR="$HOME/.nvm"
+# [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh" # This loads nvm
+
+# OPENSSL FIX
+function cleanup {
+  echo "Killing SSH-Agent"
+  kill -9 $SSH_AGENT_PID
+}
+
+trap cleanup EXIT
+
+# HACKS
+alias brewfix='sudo chown $(whoami):admin /usr/local && sudo chown -R $(whoami):admin /usr/local'
+alias bluetoothfix="sudo kextunload -b com.apple.iokit.BroadcomBluetoothHostControllerUSBTransport && sudo kextload -b com.apple.iokit.BroadcomBluetoothHostControllerUSBTransport"
+
+ulimit -n 9999
