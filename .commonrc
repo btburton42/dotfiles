@@ -4,6 +4,9 @@ alias be='bundle exec'
 # TERMINAL
 alias l='ls -la'
 
+# GHOSTSCRIPT
+alias gscript='/usr/local/bin/gs'
+
 # dir color change
 export LSCOLORS="Gxfxcxdxbxegedabagacad"
 
@@ -47,11 +50,21 @@ alias gfa='git fetch --all'
 alias gba='git branch --all'
 
 
-## rebase against master
+## GIT REBASE AGAINST MASTER
 function grb {
   CUR_BRANCH=`git rev-parse --abbrev-ref HEAD`
   HASH=`git merge-base master ${CUR_BRANCH}`
   git rebase -i ${HASH}
+}
+
+# ITERM
+
+## iterm shell integration
+test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
+
+## iterm git branch badge
+function iterm2_print_user_vars() {
+  iterm2_set_user_var gitBranch $((git branch 2> /dev/null) | grep \* | cut -c3-)
 }
 
 # JAVA
@@ -82,5 +95,6 @@ trap cleanup EXIT
 # HACKS
 alias brewfix='sudo chown $(whoami):admin /usr/local && sudo chown -R $(whoami):admin /usr/local'
 alias bluetoothfix="sudo kextunload -b com.apple.iokit.BroadcomBluetoothHostControllerUSBTransport && sudo kextload -b com.apple.iokit.BroadcomBluetoothHostControllerUSBTransport"
+alias finder='openInFinder.sh'
 
 ulimit -n 9999
