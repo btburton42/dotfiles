@@ -36,7 +36,6 @@ PATH=/opt/chefdk/bin:$PATH
 # EDITOR
 export EDITOR='atom -nw'
 export BUNDLER_EDITOR=$EDITOR
-export GIT_EDITOR="$EDITOR -w"
 alias edit=$EDITOR
 
 # GIT
@@ -48,14 +47,18 @@ alias gcam='git commit -a --m'
 alias gd='git diff'
 alias gfa='git fetch --all'
 alias gba='git branch --all'
+alias glog='git log --oneline --all --graph --decorate'
 
-
-## GIT REBASE AGAINST MASTER
 function grb {
   CUR_BRANCH=`git rev-parse --abbrev-ref HEAD`
   HASH=`git merge-base master ${CUR_BRANCH}`
   git rebase -i ${HASH}
 }
+
+# function gdloc {
+#   BRANCHES=`git branch -r`
+#   awk '{print ${BRANCHES}}'
+# }
 
 # ITERM
 
@@ -81,8 +84,8 @@ export MAVEN_OPTS='-XX:MaxPermSize=512M -Xms2048M -Xmx2048M -Xss64M -XX:+CMSClas
 # alias node="node --harmony"
 
 # NVM
-# export NVM_DIR="$HOME/.nvm"
-# [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh" # This loads nvm
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh" # This loads nvm
 
 # OPENSSL FIX
 function cleanup {
@@ -96,5 +99,6 @@ trap cleanup EXIT
 alias brewfix='sudo chown $(whoami):admin /usr/local && sudo chown -R $(whoami):admin /usr/local'
 alias bluetoothfix="sudo kextunload -b com.apple.iokit.BroadcomBluetoothHostControllerUSBTransport && sudo kextload -b com.apple.iokit.BroadcomBluetoothHostControllerUSBTransport"
 alias finder='openInFinder.sh'
+alias killphantomjs='ps aux | pgrep -f phantomjs | xargs kill'
 
 ulimit -n 9999
