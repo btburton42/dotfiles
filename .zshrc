@@ -71,3 +71,5 @@ source ~/powerlevel10k/powerlevel10k.zsh-theme
 
 # Pi
 export PATH="/Users/tylerburton/.asdf/installs/nodejs/25.2.1/bin:$PATH"
+export PATH="/Users/tylerburton/.local/bin:$PATH"
+
