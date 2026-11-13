@@ -7,3 +7,5 @@ end, { desc = "Open Neovim AI Helper" })
 
 vim.opt.undofile = true
 
+vim.keymap.set("n", "<Tab>", "<C-w>w", { desc = "Next window" })
+vim.keymap.set("n", "<S-Tab>", "<C-w>W", { desc = "Previous window" })

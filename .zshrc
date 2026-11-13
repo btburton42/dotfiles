@@ -27,10 +27,9 @@ bindkey '\e[A' history-beginning-search-backward
 bindkey '\e[B' history-beginning-search-forward
 
 # navigation and shit
-alias l='ls'
+alias l='ls -lah'
 setopt AUTO_CD
 setopt AUTO_LIST        # show matches when you press Tab
-setopt LIST_ROWS_FIRST  # fill across rows rather than down columns
 
 
 # autojump init
