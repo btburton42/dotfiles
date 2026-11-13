@@ -1,42 +1,9 @@
-# Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
-# Initialization code that may require console input (password prompts, [y/n]
-# confirmations, etc.) must go above this block; everything else may go below.
-if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
-  source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
-fi
-
 # Path to your Oh My Zsh installation.
-export ZSH="$HOME/.oh-my-zsh"
-
-# Set name of the theme to load --- if set to "random", it will
-# load a random theme each time Oh My Zsh is loaded, in which case,
-# to know which specific one was loaded, run: echo $RANDOM_THEME
-# See https://github.com/ohmyzsh/ohmyzsh/wiki/Themes
-# ZSH_THEME="powerlevel10k"
-
-# Set list of themes to pick from when loading at random
-# Setting this variable when ZSH_THEME=random will cause zsh to load
-# a theme from this variable instead of looking in $ZSH/themes/
-# If set to an empty array, this variable will have no effect.
-# ZSH_THEME_RANDOM_CANDIDATES=( "robbyrussell" "agnoster" )
-
-# Uncomment the following line if pasting URLs and other text is messed up.
-# DISABLE_MAGIC_FUNCTIONS="true"
-
-# ## ZSH PLUGINS
-# source /opt/homebrew/share/zsh-autocomplete/zsh-autocomplete.plugin.zsh
-
-# Which plugins would you like to load?
-# Standard plugins can be found in $ZSH/plugins/
-# Custom plugins may be added to $ZSH_CUSTOM/plugins/
-# Example format: plugins=(rails git textmate ruby lighthouse)
-# Add wisely, as too many plugins slow down shell startup.
-plugins=(git zsh-history-substring-search zsh-autocomplete)
-
-source $ZSH/oh-my-zsh.sh
+# export ZSH="$HOME/.oh-my-zsh"
 
 # Preferred editor for local and remote sessions
-if [[ -n $SSH_CONNECTION ]]; then
+
+if [[ -n "$SSH_CONNECTION" ]]; then
   export EDITOR='vim'
 else
   export EDITOR='mvim'
@@ -44,6 +11,27 @@ fi
 
 # CLI
 export LSCOLORS=GxFxCxDxbxegedabagaced
+
+# Tab completion
+autoload -Uz compinit
+compinit
+
+# Command history
+HISTFILE="$HOME/.zsh_history"
+HISTSIZE=10000
+SAVEHIST=10000
+setopt APPEND_HISTORY SHARE_HISTORY HIST_IGNORE_DUPS
+
+# Up/down arrows search history using what you've typed so far
+bindkey '\e[A' history-beginning-search-backward
+bindkey '\e[B' history-beginning-search-forward
+
+# navigation and shit
+alias l='ls'
+setopt AUTO_CD
+setopt AUTO_LIST        # show matches when you press Tab
+setopt LIST_ROWS_FIRST  # fill across rows rather than down columns
+
 
 # autojump init
 [ -f /opt/homebrew/etc/profile.d/autojump.sh ] && . /opt/homebrew/etc/profile.d/autojump.sh
@@ -58,18 +46,20 @@ alias syncpi='rsync -av pi@192.168.110.20:/home/qbtuser/Downloads/ /Users/tylerb
 alias python="python3"
 alias szsh="source ~/.zshrc"
 
+alias config='/usr/bin/git --git-dir=$HOME/.cfg/ --work-tree=$HOME'
+
 # asdf init
 export ASDF_DATA_DIR=/Users/tylerburton/.asdf
 export PATH="$ASDF_DATA_DIR/shims:$PATH"
 
 # opencode
 export PATH=/Users/tylerburton/.opencode/bin:$PATH
-source ~/powerlevel10k/powerlevel10k.zsh-theme
-
-# To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
-[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
 # Pi
 export PATH="/Users/tylerburton/.asdf/installs/nodejs/25.2.1/bin:$PATH"
 export PATH="/Users/tylerburton/.local/bin:$PATH"
 
+# fuzzy history
+source <(fzf --zsh)
+# bring in starship
+eval "$(starship init zsh)"
