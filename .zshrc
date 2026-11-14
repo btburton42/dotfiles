@@ -1,8 +1,6 @@
-# Path to your Oh My Zsh installation.
-# export ZSH="$HOME/.oh-my-zsh"
-
+# This is a zsh
+#
 # Preferred editor for local and remote sessions
-
 if [[ -n "$SSH_CONNECTION" ]]; then
   export EDITOR='vim'
 else
@@ -31,9 +29,9 @@ alias l='ls -lah'
 setopt AUTO_CD
 setopt AUTO_LIST        # show matches when you press Tab
 
-
 # autojump init
 [ -f /opt/homebrew/etc/profile.d/autojump.sh ] && . /opt/homebrew/etc/profile.d/autojump.sh
+[ -f /home/linuxbrew/.linuxbrew/etc/profile.d/autojump.sh ] && . /home/linuxbrew/.linuxbrew/etc/profile.d/autojump.sh
 
 # pyenv
 export PYENV_ROOT="$HOME/.pyenv"
@@ -43,13 +41,16 @@ eval "$(pyenv init - zsh)"
 # ALIASES
 alias syncpi='rsync -av pi@192.168.110.20:/home/qbtuser/Downloads/ /Users/tylerburton/Documents/rpi-sync'
 alias python="python3"
-alias szsh="source ~/.zshrc"
+alias srcz="source ~/.zshrc"
 
 alias config='/usr/bin/git --git-dir=$HOME/.cfg/ --work-tree=$HOME'
 
 # asdf init
 export ASDF_DATA_DIR=/Users/tylerburton/.asdf
 export PATH="$ASDF_DATA_DIR/shims:$PATH"
+
+# homebrew
+[ -f /home/linuxbrew/.linuxbrew/bin/brew ] && eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv zsh)"
 
 # opencode
 export PATH=/Users/tylerburton/.opencode/bin:$PATH
